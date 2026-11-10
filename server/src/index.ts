@@ -39,7 +39,7 @@ if (fs.existsSync(clientDistPath)) {
 }
 
 const server = app.listen(PORT, '0.0.0.0', () => {
-  console.log(`[Server] Job Tracker API running on http://0.0.0.0:${PORT}`);
+  console.log(`[Server] Haluan API running on http://0.0.0.0:${PORT}`);
 });
 
 // Graceful shutdown

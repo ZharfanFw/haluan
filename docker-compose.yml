@@ -1,9 +1,9 @@
 services:
-  job-tracker:
+  haluan:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: job-tracker
+    container_name: haluan
     restart: unless-stopped
     ports:
       - "3000:3000"
