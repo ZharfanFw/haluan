@@ -1,5 +1,5 @@
 import React from 'react';
-import { Building, Calendar, DollarSign, ArrowUpDown, ArrowUp, ArrowDown } from 'lucide-react';
+import { Building, Calendar, DollarSign, ArrowUpDown, ArrowUp, ArrowDown, Search } from 'lucide-react';
 import { Application, ApplicationStatus } from '../types';
 import { formatDate } from '../lib/utils';
 
@@ -31,8 +31,8 @@ export const TableView: React.FC<TableViewProps> = ({
   if (applications.length === 0) {
     return (
       <div className="py-20 border border-dashed border-zinc-800 rounded-2xl flex flex-col items-center justify-center text-center p-6 bg-zinc-900/20">
-        <div className="w-12 h-12 rounded-xl bg-zinc-900 flex items-center justify-center text-xl mb-3 border border-zinc-800">
-          🔍
+        <div className="w-12 h-12 rounded-xl bg-zinc-900 flex items-center justify-center mb-3 border border-zinc-800 text-zinc-400">
+          <Search className="w-5 h-5" />
         </div>
         <h3 className="text-sm font-semibold text-zinc-200">Tidak ada lamaran yang cocok</h3>
         <p className="text-xs text-zinc-400 mt-1 max-w-sm">

@@ -7,7 +7,7 @@ import { QuickAddModal } from './components/QuickAddModal';
 import { DetailDrawer } from './components/DetailDrawer';
 import { Application, ApplicationStats, ApplicationStatus, CreateApplicationDto, UpdateApplicationDto } from './types';
 import { fetchApplications, fetchStats, createApplication, updateApplication, deleteApplication } from './lib/api';
-import { AlertCircle, RefreshCw, Plus } from 'lucide-react';
+import { AlertCircle, RefreshCw, Plus, Compass } from 'lucide-react';
 
 export function App() {
   const [applications, setApplications] = useState<Application[]>([]);
@@ -160,8 +160,8 @@ export function App() {
         ) : applications.length === 0 && !searchQuery && !selectedStatusFilter ? (
           /* State 3: Clean Initial Empty State */
           <div className="py-24 border border-dashed border-zinc-800 rounded-3xl flex flex-col items-center justify-center text-center p-8 bg-zinc-900/20 my-6">
-            <div className="w-16 h-16 rounded-2xl bg-zinc-900 flex items-center justify-center text-3xl mb-4 border border-zinc-800 shadow-inner">
-              🎯
+            <div className="w-14 h-14 rounded-2xl bg-zinc-900 flex items-center justify-center mb-4 border border-zinc-800 shadow-inner text-zinc-300">
+              <Compass className="w-7 h-7" />
             </div>
             <h2 className="text-lg font-bold text-zinc-100 tracking-tight">
               Mulai Tracking Lamaran Pertamamu

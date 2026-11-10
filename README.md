@@ -1,22 +1,22 @@
-# 💼 Job Tracker (Minimalist & Self-Hosted)
+# Haluan (Personal Career Application Tracker)
 
-A lightweight, distraction-free job application tracker built for speed, clarity, and zero tracking fatigue. Designed specifically to run smoothly on self-hosted environments (such as a vintage home server / ThinkPad X200) with minimal RAM usage (< 50MB) and zero external database dependencies.
+A lightweight, distraction-free career application tracker built for speed, clarity, and zero tracking fatigue. Designed specifically to run smoothly on self-hosted environments (such as a vintage home server / ThinkPad X200) with minimal RAM usage (< 50MB) and zero external database dependencies.
 
 ---
 
-## ✨ Features
+## Features
 
-- **⚡ Anti-Fatigue Quick Add**: Only 2 required fields (*Company* and *Role*). Log an application in under 3 seconds so marathon job applications don't feel like a chore.
-- **📊 Dual View Layout**:
-  - **Kanban Board**: Visually track stages (*Wishlist → Applied → Interviewing → Offer → Rejected*) with 1-click stage advancement.
+- **Anti-Fatigue Quick Add**: Only 2 required fields (*Company* and *Role*). Log an application in under 3 seconds so marathon job applications don't feel like a chore.
+- **Dual View Layout**:
+  - **Kanban Board**: Visually track stages (*Wishlist -> Applied -> Interviewing -> Offer -> Rejected*) with 1-click stage advancement.
   - **Table View**: Compact spreadsheet style with search, sorting by date/company, and instant status updates.
-- **📈 Pipeline Statistics Bar**: Top summary metrics with 1-click filter toggle.
-- **🎨 UI Anti-Slop Design**: Dark zinc minimalist aesthetic, high-contrast typography, zero unneeded neon gradients, and strict 4-state handling (Skeleton loading, friendly Empty state, Error retry, and Data views).
-- **🔒 Rock-Solid Local Persistence**: Embedded SQLite database (`node:sqlite`) with WAL mode. Zero setup, zero memory bloat, atomic backups.
+- **Pipeline Statistics Bar**: Top summary metrics with 1-click filter toggle.
+- **UI Anti-Slop Design**: Dark zinc minimalist aesthetic, high-contrast typography, zero unneeded neon gradients, and strict 4-state handling (Skeleton loading, friendly Empty state, Error retry, and Data views).
+- **Rock-Solid Local Persistence**: Embedded SQLite database (`node:sqlite`) with WAL mode. Zero setup, zero memory bloat, atomic backups.
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 | :--- | :--- |
@@ -27,7 +27,7 @@ A lightweight, distraction-free job application tracker built for speed, clarity
 
 ---
 
-## 🚀 Cara Menjalankan
+## Cara Menjalankan
 
 ### 1. Menjalankan di Mode Development (Lokal)
 
@@ -82,7 +82,7 @@ cp data/jobs.db ~/backup-jobs-$(date +%F).db
 
 ---
 
-## 📁 Struktur Direktori
+## Struktur Direktori
 
 ```text
 job-tracker/

@@ -1,7 +1,8 @@
 import React from 'react';
-import { Columns3, Table2, Plus, Search, X } from 'lucide-react';
+import { Columns3, Table2, Plus, Search, X, Compass } from 'lucide-react';
 
 interface NavbarProps {
+  appName?: string;
   searchQuery: string;
   onSearchChange: (query: string) => void;
   viewMode: 'kanban' | 'table';
@@ -10,6 +11,7 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
+  appName = 'Haluan',
   searchQuery,
   onSearchChange,
   viewMode,
@@ -22,13 +24,13 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Logo & Title */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="h-8 w-8 rounded-lg bg-zinc-800 border border-zinc-700/60 flex items-center justify-center text-base shadow-sm">
-              💼
+            <div className="h-8 w-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-200 shadow-sm">
+              <Compass className="w-4 h-4 text-zinc-300" />
             </div>
             <div>
               <h1 className="text-base font-semibold tracking-tight text-zinc-100 flex items-center gap-2">
-                Job Tracker
-                <span className="text-[10px] font-medium tracking-wide uppercase px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-400 border border-zinc-700/50">
+                {appName}
+                <span className="text-[10px] font-medium tracking-wide uppercase px-1.5 py-0.5 rounded bg-zinc-900 text-zinc-400 border border-zinc-800">
                   Local
                 </span>
               </h1>
