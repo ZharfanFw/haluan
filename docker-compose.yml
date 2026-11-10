@@ -1,0 +1,15 @@
+services:
+  job-tracker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: job-tracker
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - DB_PATH=/app/data/jobs.db

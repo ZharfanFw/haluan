@@ -1,22 +1,30 @@
 # Project State: Minimalist Job Application Tracker
 
-## Current Milestone: Milestone 0 - Project Setup & Architecture Approval
-- **Status**: Ready to scaffold
-- **Architecture**: Vite + React SPA + Express.js API (TypeScript)
-- **Database**: SQLite (`data/jobs.db`) via `better-sqlite3`
-- **Deployment**: Docker & Docker Compose (`node:20-alpine`) for ThinkPad X200 home server
+## Current Milestone: Milestone 1 - Full Vertical Slice Implementation & Verified
+- **Status**: COMPLETED & VERIFIED
+- **Architecture**: Vite 6 + React 18 SPA + Express.js API (TypeScript)
+- **Database**: Embedded SQLite (`node:sqlite` in WAL mode) in `data/jobs.db`
+- **Deployment**: Docker (`node:22-alpine`) + Docker Compose for ThinkPad X200 home server
 - **Design Standard**: UI Anti-Slop (Minimalist, dark zinc aesthetic, 4-state component handling)
 
 ## Architecture Decisions
 1. **Node.js LTS over Bun**: Selected because target host is a ThinkPad X200 (Intel Core 2 Duo) which lacks AVX2 instruction support.
-2. **Embedded SQLite over External DB**: Zero RAM overhead, no second container, atomic backups via single-file copy.
-3. **Unified Single-Port Deployment**: Express serves both `/api/*` and compiled Vite static assets in production, simplifying reverse-proxy and Docker port mapping.
+2. **Native `node:sqlite`**: Leveraged Node 22's built-in SQLite engine (`DatabaseSync`) to eliminate C++ compilation, `python3`, `make`, and `node-gyp` dependencies. This guarantees fast, zero-failure Docker builds on vintage hardware.
+3. **Unified Single-Port Deployment**: Express serves both `/api/*` and compiled Vite static assets (`/client/dist`) in production on port 3000.
 4. **Anti-Fatigue Quick Add**: Only `company` and `role` are mandatory for adding an application.
+5. **Dual View**: Kanban Board + Spreadsheet Table with in-place status shift and fast search/filtering.
 
-## Next Steps (Vertical Slice)
-1. Initialize root workspace `package.json` and directory structure.
-2. Build Express server (`server/`) with SQLite schema, validation, and REST endpoints.
-3. Verify backend endpoints with automated test / curl verification.
-4. Scaffold Vite React frontend (`client/`) with Tailwind CSS and Lucide icons.
-5. Implement Kanban Board & Table views with 4-state UI.
-6. Create `Dockerfile` & `docker-compose.yml` and test build.
+## Verification Log
+- [x] Client TypeScript compilation & Vite production build passed (4.13s).
+- [x] Server TypeScript compilation passed.
+- [x] Integration suite passed all 9 deterministic end-to-end checks:
+  - Health check (`/health`)
+  - Initial empty stats (`/api/stats`)
+  - Application creation (`POST /api/applications`)
+  - Query & sorting (`GET /api/applications`)
+  - Full-text search (`GET /api/applications?q=...`)
+  - Status updates (`PATCH /api/applications/:id`)
+  - Pipeline metrics sync (`GET /api/stats`)
+  - Deletion (`DELETE /api/applications/:id`)
+  - Static SPA serving (`GET /`)
+- [x] Dockerfile & docker-compose.yml configured for single-command homeserver deployment with mounted `./data`.
