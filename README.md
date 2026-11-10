@@ -56,7 +56,7 @@ docker compose up -d --build
 Aplikasi langsung dapat diakses di browser jaringan lokal kamu melalui:
 `http://<IP-HOMESERVER>:3000`
 
-Semua data lamaran tersimpan dengan aman di folder `./data/jobs.db` pada host machine kamu.
+Semua data lamaran tersimpan dengan aman di folder `./data/haluan.db` pada host machine kamu.
 
 #### Untuk Menghentikan atau Update:
 
@@ -77,7 +77,7 @@ docker compose up -d --build
 
 Karena database menggunakan SQLite tunggal di folder `./data`, kamu cukup menyalin file:
 ```bash
-cp data/jobs.db ~/backup-jobs-$(date +%F).db
+cp data/haluan.db ~/backup-haluan-$(date +%F).db
 ```
 
 ---
@@ -85,7 +85,7 @@ cp data/jobs.db ~/backup-jobs-$(date +%F).db
 ## Struktur Direktori
 
 ```text
-job-tracker/
+haluan/
 ├── client/                 # Vite + React (Frontend SPA)
 │   ├── src/
 │   │   ├── components/     # Navbar, KanbanBoard, TableView, QuickAddModal, DetailDrawer, StatsBanner

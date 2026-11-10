@@ -26,7 +26,7 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 ENV PORT=3000
-ENV DB_PATH=/app/data/jobs.db
+ENV DB_PATH=/app/data/haluan.db
 
 # Copy workspace package manifests
 COPY package.json package-lock.json ./

@@ -1,9 +1,9 @@
-# Project State: Minimalist Job Application Tracker
+# Project State: Haluan (Personal Career Application Tracker)
 
 ## Current Milestone: Milestone 1 - Full Vertical Slice Implementation & Verified
 - **Status**: COMPLETED & VERIFIED
 - **Architecture**: Vite 6 + React 18 SPA + Express.js API (TypeScript)
-- **Database**: Embedded SQLite (`node:sqlite` in WAL mode) in `data/jobs.db`
+- **Database**: Embedded SQLite (`node:sqlite` in WAL mode) in `data/haluan.db`
 - **Deployment**: Docker (`node:22-alpine`) + Docker Compose for ThinkPad X200 home server
 - **Design Standard**: UI Anti-Slop (Minimalist, dark zinc aesthetic, 4-state component handling)
 

@@ -1,9 +1,9 @@
-# Technical Specification: Minimalist Job Application Tracker
+# Technical Specification: Haluan - Personal Career Application Tracker
 
 > **Status**: APPROVED  
 > **Architecture**: Vite + React SPA + Express.js API (TypeScript)  
-> **Database**: Embedded SQLite (via better-sqlite3)  
-> **Deployment**: Docker & Docker Compose on Home Server (ThinkPad X200 / Intel Core 2 Duo, Node.js 20/22 LTS)  
+> **Database**: Embedded SQLite (via node:sqlite)  
+> **Deployment**: Docker & Docker Compose on Home Server (ThinkPad X200 / Intel Core 2 Duo, Node.js 22 LTS)  
 > **Design Philosophy**: Minimalist, fast, anti-fatigue, zero AI-slop UI, rock-solid persistence.
 
 ---
@@ -11,7 +11,7 @@
 ## 1. Overview & Constraints
 
 ### 1.1 The Objective
-A lightweight, lightning-fast job tracker designed for active job hunting. It eliminates tracking friction with a 2-field quick entry ("Anti-Fatigue"), provides instant visual status progression across application stages, and operates with a clean, distraction-free minimalist aesthetic.
+A lightweight, lightning-fast career application tracker (Haluan) designed for active job hunting. It eliminates tracking friction with a 2-field quick entry ("Anti-Fatigue"), provides instant visual status progression across application stages, and operates with a clean, distraction-free minimalist aesthetic.
 
 ### 1.2 Target Hardware & Deployment Environment (ThinkPad X200)
 - **CPU**: Intel Core 2 Duo (x86_64 legacy architecture, **no AVX/AVX2** support).
@@ -59,7 +59,7 @@ A lightweight, lightning-fast job tracker designed for active job hunting. It el
 
 ---
 
-## 4. Data Schema (`data/jobs.db`)
+## 4. Data Schema (`data/haluan.db`)
 
 ```sql
 CREATE TABLE IF NOT EXISTS applications (
@@ -100,7 +100,7 @@ CREATE INDEX IF NOT EXISTS idx_applications_company ON applications(company);
 ## 6. Project Architecture
 
 ```text
-job-tracker/
+haluan/
 ├── server/                 # Express backend (TypeScript)
 │   ├── src/
 │   │   ├── db.ts           # SQLite connection & schema migrations
@@ -135,7 +135,7 @@ job-tracker/
 1. **Docker & Hardware Compatibility**:
    - Container builds cleanly with multi-stage Dockerfile using `node:20-alpine`.
    - Starts without requiring AVX/AVX2 CPU flags.
-   - Database persists cleanly in mounted `./data/jobs.db`.
+   - Database persists cleanly in mounted `./data/haluan.db`.
 2. **API & Data Layer**:
    - Validation rejects requests missing `company` or `role`.
    - SQLite indexes confirm fast queries.
