@@ -1,0 +1,7 @@
+.trash-data
+node_modules
+dist
+.env
+.env.local
+*.db-shm
+*.db-wal
