@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # Stage 1: Build Frontend and Backend
-FROM node:22-alpine AS builder
+FROM node:22-slim AS builder
 
 WORKDIR /app
 
@@ -10,8 +10,8 @@ COPY package.json package-lock.json ./
 COPY server/package.json ./server/
 COPY client/package.json ./client/
 
-# Install all dependencies (including devDependencies for TypeScript & Vite)
-RUN npm ci
+# Install all dependencies without audit or fund network roundtrips
+RUN npm ci --no-audit --no-fund
 
 # Copy source code
 COPY . .
@@ -20,7 +20,7 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Production Runtime
-FROM node:22-alpine AS runner
+FROM node:22-slim AS runner
 
 WORKDIR /app
 
@@ -32,8 +32,8 @@ ENV DB_PATH=/app/data/haluan.db
 COPY package.json package-lock.json ./
 COPY server/package.json ./server/
 
-# Install only production dependencies for the server
-RUN npm ci --omit=dev --workspace=server
+# Install only production dependencies for the server (express, cors)
+RUN npm ci --omit=dev --workspace=server --no-audit --no-fund
 
 # Copy built server and static client dist from builder
 COPY --from=builder /app/server/dist ./server/dist
