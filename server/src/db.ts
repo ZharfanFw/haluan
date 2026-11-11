@@ -2,8 +2,13 @@
 import { DatabaseSync } from 'node:sqlite';
 import path from 'node:path';
 import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
-const defaultDbPath = path.resolve(process.cwd(), process.cwd().endsWith('server') ? '../data/haluan.db' : './data/haluan.db');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Always resolve to the project's data directory regardless of where node/npm was launched
+const defaultDbPath = path.resolve(__dirname, '../../data/haluan.db');
 const dbFilePath = process.env.DB_PATH ? path.resolve(process.env.DB_PATH) : defaultDbPath;
 
 const dbDir = path.dirname(dbFilePath);
