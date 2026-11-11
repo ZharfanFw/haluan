@@ -49,12 +49,21 @@ npm run dev
 Cukup gunakan satu perintah Docker Compose:
 
 ```bash
+# Clone repository di homeserver
+git clone https://github.com/ZharfanFw/haluan.git
+cd haluan
+
+# (Opsional) Jika port 3000 di homeserver sudah terpakai:
+# Salin .env.example dan ubah PORT ke angka lain, misal 3500
+cp .env.example .env
+# nano .env  -> ganti PORT=3500
+
 # Build dan jalankan container di background
 docker compose up -d --build
 ```
 
 Aplikasi langsung dapat diakses di browser jaringan lokal kamu melalui:
-`http://<IP-HOMESERVER>:3000`
+`http://<IP-HOMESERVER>:<PORT>` (default port 3000).
 
 Semua data lamaran tersimpan dengan aman di folder `./data/haluan.db` pada host machine kamu.
 
