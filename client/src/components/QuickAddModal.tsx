@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { X, ChevronDown, ChevronUp, Loader2 } from 'lucide-react';
 import { ApplicationStatus, CreateApplicationDto, WorkMode } from '../types';
+import { STATUS_CONFIG, WORK_MODE_OPTIONS } from '../config/status';
 
 interface QuickAddModalProps {
   isOpen: boolean;
@@ -164,11 +165,11 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({
                   onChange={(e) => setStatus(e.target.value as ApplicationStatus)}
                   className="w-full px-3 py-2 text-xs sm:text-sm bg-zinc-950 border border-zinc-800 rounded-lg text-zinc-200 focus:outline-none focus:ring-1 focus:ring-zinc-400"
                 >
-                  <option value="wishlist">Wishlist</option>
-                  <option value="applied">Applied</option>
-                  <option value="interviewing">Interviewing</option>
-                  <option value="offer">Offer</option>
-                  <option value="rejected">Rejected</option>
+                  {STATUS_CONFIG.map((opt) => (
+                    <option key={opt.status} value={opt.status}>
+                      {opt.label}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -181,9 +182,11 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({
                   onChange={(e) => setWorkMode(e.target.value as WorkMode)}
                   className="w-full px-3 py-2 text-xs sm:text-sm bg-zinc-950 border border-zinc-800 rounded-lg text-zinc-200 focus:outline-none focus:ring-1 focus:ring-zinc-400"
                 >
-                  <option value="remote">Remote</option>
-                  <option value="hybrid">Hybrid</option>
-                  <option value="onsite">On-site</option>
+                  {WORK_MODE_OPTIONS.map((opt) => (
+                    <option key={opt.mode} value={opt.mode}>
+                      {opt.label}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>

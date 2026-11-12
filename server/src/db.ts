@@ -47,3 +47,6 @@ export function initDatabase() {
     CREATE INDEX IF NOT EXISTS idx_applications_company ON applications(company);
   `);
 }
+
+// Ensure database schema is initialized immediately upon connection
+initDatabase();

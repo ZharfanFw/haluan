@@ -2,6 +2,7 @@ import React from 'react';
 import { Building, MapPin, DollarSign, Calendar, ChevronRight, Plus } from 'lucide-react';
 import { Application, ApplicationStatus } from '../types';
 import { formatDate } from '../lib/utils';
+import { STATUS_CONFIG, NEXT_STAGE_MAP } from '../config/status';
 
 interface KanbanBoardProps {
   applications: Application[];
@@ -9,52 +10,6 @@ interface KanbanBoardProps {
   onUpdateStatus: (id: string, newStatus: ApplicationStatus) => Promise<void>;
   onOpenQuickAdd: (defaultStatus: ApplicationStatus) => void;
 }
-
-const STAGES: {
-  status: ApplicationStatus;
-  label: string;
-  badgeClass: string;
-  dotColor: string;
-}[] = [
-  {
-    status: 'wishlist',
-    label: 'Wishlist',
-    badgeClass: 'bg-zinc-800 text-zinc-300 border-zinc-700/80',
-    dotColor: 'bg-zinc-400',
-  },
-  {
-    status: 'applied',
-    label: 'Applied',
-    badgeClass: 'bg-blue-950/60 text-blue-400 border-blue-800/50',
-    dotColor: 'bg-blue-400',
-  },
-  {
-    status: 'interviewing',
-    label: 'Interviewing',
-    badgeClass: 'bg-amber-950/60 text-amber-400 border-amber-800/50',
-    dotColor: 'bg-amber-400',
-  },
-  {
-    status: 'offer',
-    label: 'Offer',
-    badgeClass: 'bg-emerald-950/60 text-emerald-400 border-emerald-800/50',
-    dotColor: 'bg-emerald-400',
-  },
-  {
-    status: 'rejected',
-    label: 'Rejected',
-    badgeClass: 'bg-zinc-900 text-zinc-500 border-zinc-800',
-    dotColor: 'bg-rose-400',
-  },
-];
-
-const NEXT_STAGE_MAP: Record<ApplicationStatus, ApplicationStatus | null> = {
-  wishlist: 'applied',
-  applied: 'interviewing',
-  interviewing: 'offer',
-  offer: null,
-  rejected: null,
-};
 
 export const KanbanBoard: React.FC<KanbanBoardProps> = ({
   applications,
@@ -64,7 +19,7 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
 }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 items-start pb-8">
-      {STAGES.map((stage) => {
+      {STATUS_CONFIG.map((stage) => {
         const columnApps = applications.filter((app) => app.status === stage.status);
 
         return (

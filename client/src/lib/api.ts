@@ -2,12 +2,15 @@ import { Application, ApplicationStats, CreateApplicationDto, UpdateApplicationD
 
 const API_BASE = '/api';
 
-export async function fetchApplications(params?: {
-  q?: string;
-  status?: string;
-  sortBy?: string;
-  order?: 'asc' | 'desc';
-}): Promise<Application[]> {
+export async function fetchApplications(
+  params?: {
+    q?: string;
+    status?: string;
+    sortBy?: string;
+    order?: 'asc' | 'desc';
+  },
+  signal?: AbortSignal
+): Promise<Application[]> {
   const searchParams = new URLSearchParams();
   if (params?.q) searchParams.set('q', params.q);
   if (params?.status) searchParams.set('status', params.status);
@@ -15,7 +18,7 @@ export async function fetchApplications(params?: {
   if (params?.order) searchParams.set('order', params.order);
 
   const url = `${API_BASE}/applications${searchParams.toString() ? `?${searchParams.toString()}` : ''}`;
-  const res = await fetch(url);
+  const res = await fetch(url, { signal });
   if (!res.ok) {
     const errorData = await res.json().catch(() => ({}));
     throw new Error(errorData.error || 'Gagal memuat daftar lamaran');
@@ -23,8 +26,8 @@ export async function fetchApplications(params?: {
   return res.json();
 }
 
-export async function fetchStats(): Promise<ApplicationStats> {
-  const res = await fetch(`${API_BASE}/stats`);
+export async function fetchStats(signal?: AbortSignal): Promise<ApplicationStats> {
+  const res = await fetch(`${API_BASE}/stats`, { signal });
   if (!res.ok) {
     throw new Error('Gagal memuat ringkasan statistik');
   }

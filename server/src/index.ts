@@ -4,7 +4,8 @@ import path from 'node:path';
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { db, initDatabase } from './db.js';
-import { router as apiRouter } from './routes.js';
+import { router as apiRouter } from './routes/index.js';
+import { errorHandler } from './middleware/error.middleware.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -12,19 +13,28 @@ const __dirname = path.dirname(__filename);
 // Initialize DB schema
 initDatabase();
 
-const app = express();
+export const app = express();
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
-app.use(cors());
-app.use(express.json());
+// Security hygiene: disable fingerprinting and set defensive headers
+app.disable('x-powered-by');
+app.use((_req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  next();
+});
 
-// API Routes
-app.use('/api', apiRouter);
+app.use(cors());
+app.use(express.json({ limit: '500kb' }));
 
 // Health check endpoint
 app.get('/health', (_req, res) => {
   res.json({ status: 'ok', uptime: process.uptime() });
 });
+
+// API Routes
+app.use('/api', apiRouter);
 
 // Production static assets serving (from Vite build)
 const clientDistPath = path.resolve(__dirname, '../../client/dist');
@@ -38,19 +48,31 @@ if (fs.existsSync(clientDistPath)) {
   });
 }
 
-const server = app.listen(PORT, '0.0.0.0', () => {
-  console.log(`[Server] Haluan API running on http://0.0.0.0:${PORT}`);
-});
+// Centralized error handling middleware (must be registered after all routes)
+app.use(errorHandler);
+
+// Only listen when executed directly (not when imported in test runners)
+let server: ReturnType<typeof app.listen> | null = null;
+if (process.env.NODE_ENV !== 'test') {
+  server = app.listen(PORT, '0.0.0.0', () => {
+    console.log(`[Server] Haluan API running on http://0.0.0.0:${PORT}`);
+  });
+}
 
 // Graceful shutdown
 function gracefulShutdown(signal: string) {
   console.log(`[Server] Received ${signal}. Closing gracefully...`);
-  server.close(() => {
-    console.log('[Server] HTTP server closed.');
+  if (server) {
+    server.close(() => {
+      console.log('[Server] HTTP server closed.');
+      db.close();
+      console.log('[Server] SQLite connection closed.');
+      process.exit(0);
+    });
+  } else {
     db.close();
-    console.log('[Server] SQLite connection closed.');
     process.exit(0);
-  });
+  }
 }
 
 process.on('SIGINT', () => gracefulShutdown('SIGINT'));

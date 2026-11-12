@@ -2,6 +2,7 @@ import React from 'react';
 import { Building, Calendar, DollarSign, ArrowUpDown, ArrowUp, ArrowDown, Search } from 'lucide-react';
 import { Application, ApplicationStatus } from '../types';
 import { formatDate } from '../lib/utils';
+import { STATUS_CONFIG } from '../config/status';
 
 interface TableViewProps {
   applications: Application[];
@@ -11,14 +12,6 @@ interface TableViewProps {
   order: 'asc' | 'desc';
   onSortChange: (field: string) => void;
 }
-
-const STATUS_OPTIONS: { value: ApplicationStatus; label: string; badge: string }[] = [
-  { value: 'wishlist', label: 'Wishlist', badge: 'bg-zinc-800 text-zinc-300 border-zinc-700' },
-  { value: 'applied', label: 'Applied', badge: 'bg-blue-950/60 text-blue-400 border-blue-800/50' },
-  { value: 'interviewing', label: 'Interviewing', badge: 'bg-amber-950/60 text-amber-400 border-amber-800/50' },
-  { value: 'offer', label: 'Offer', badge: 'bg-emerald-950/60 text-emerald-400 border-emerald-800/50' },
-  { value: 'rejected', label: 'Rejected', badge: 'bg-zinc-900 text-zinc-500 border-zinc-800' },
-];
 
 export const TableView: React.FC<TableViewProps> = ({
   applications,
@@ -106,8 +99,8 @@ export const TableView: React.FC<TableViewProps> = ({
                     onChange={(e) => onUpdateStatus(app.id, e.target.value as ApplicationStatus)}
                     className="text-[11px] font-medium px-2.5 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-200 focus:outline-none focus:ring-1 focus:ring-zinc-400 cursor-pointer"
                   >
-                    {STATUS_OPTIONS.map((opt) => (
-                      <option key={opt.value} value={opt.value}>
+                    {STATUS_CONFIG.map((opt) => (
+                      <option key={opt.status} value={opt.status}>
                         {opt.label}
                       </option>
                     ))}

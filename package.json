@@ -14,7 +14,9 @@
     "build:client": "npm run build --workspace=client",
     "build:server": "npm run build --workspace=server",
     "build": "npm run build:client && npm run build:server",
-    "start": "npm start --workspace=server"
+    "start": "npm start --workspace=server",
+    "test": "npm test --workspace=server",
+    "typecheck": "npm run typecheck --workspace=server && npm run typecheck --workspace=client"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"

@@ -1,5 +1,6 @@
 import React from 'react';
 import { ApplicationStats, ApplicationStatus } from '../types';
+import { STATUS_CONFIG } from '../config/status';
 
 interface StatsBannerProps {
   stats: ApplicationStats | null;
@@ -8,62 +9,27 @@ interface StatsBannerProps {
   onSelectStatus: (status: ApplicationStatus | null) => void;
 }
 
+const ALL_CARD = {
+  status: null as ApplicationStatus | null,
+  label: 'Semua Lamaran',
+  countKey: 'total' as keyof ApplicationStats,
+  dotColor: 'bg-zinc-400',
+  activeBorder: 'border-zinc-400',
+};
+
 export const StatsBanner: React.FC<StatsBannerProps> = ({
   stats,
   loading,
   selectedStatus,
   onSelectStatus,
 }) => {
-  const cards: {
-    status: ApplicationStatus | null;
-    label: string;
-    countKey: keyof ApplicationStats;
-    dotColor: string;
-    activeBorder: string;
-  }[] = [
-    {
-      status: null,
-      label: 'Semua Lamaran',
-      countKey: 'total',
-      dotColor: 'bg-zinc-400',
-      activeBorder: 'border-zinc-400',
-    },
-    {
-      status: 'wishlist',
-      label: 'Wishlist',
-      countKey: 'wishlist',
-      dotColor: 'bg-zinc-400',
-      activeBorder: 'border-zinc-400',
-    },
-    {
-      status: 'applied',
-      label: 'Applied',
-      countKey: 'applied',
-      dotColor: 'bg-blue-400',
-      activeBorder: 'border-blue-500',
-    },
-    {
-      status: 'interviewing',
-      label: 'Interviewing',
-      countKey: 'interviewing',
-      dotColor: 'bg-amber-400',
-      activeBorder: 'border-amber-500',
-    },
-    {
-      status: 'offer',
-      label: 'Offer',
-      countKey: 'offer',
-      dotColor: 'bg-emerald-400',
-      activeBorder: 'border-emerald-500',
-    },
-    {
-      status: 'rejected',
-      label: 'Rejected',
-      countKey: 'rejected',
-      dotColor: 'bg-rose-400',
-      activeBorder: 'border-rose-500',
-    },
-  ];
+  const cards = [ALL_CARD, ...STATUS_CONFIG.map((config) => ({
+    status: config.status as ApplicationStatus | null,
+    label: config.label,
+    countKey: config.status as keyof ApplicationStats,
+    dotColor: config.dotColor,
+    activeBorder: config.activeBorder,
+  }))];
 
   if (loading && !stats) {
     return (

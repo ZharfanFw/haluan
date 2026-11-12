@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, ExternalLink, Trash2, Calendar, Building, MapPin, DollarSign, UserCheck, Loader2 } from 'lucide-react';
 import { Application, ApplicationStatus, UpdateApplicationDto, WorkMode } from '../types';
+import { STATUS_MAP, STATUS_CONFIG } from '../config/status';
 
 interface DetailDrawerProps {
   application: Application | null;
@@ -91,20 +92,7 @@ export const DetailDrawer: React.FC<DetailDrawerProps> = ({
     }
   };
 
-  const getStatusBadge = (status: ApplicationStatus) => {
-    switch (status) {
-      case 'wishlist':
-        return 'bg-zinc-800 text-zinc-300 border-zinc-700';
-      case 'applied':
-        return 'bg-blue-950/60 text-blue-400 border-blue-800/50';
-      case 'interviewing':
-        return 'bg-amber-950/60 text-amber-400 border-amber-800/50';
-      case 'offer':
-        return 'bg-emerald-950/60 text-emerald-400 border-emerald-800/50';
-      case 'rejected':
-        return 'bg-zinc-900 text-zinc-500 border-zinc-800';
-    }
-  };
+  const getStatusBadge = (status: ApplicationStatus) => STATUS_MAP[status].badgeClass;
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
@@ -259,11 +247,11 @@ export const DetailDrawer: React.FC<DetailDrawerProps> = ({
                       onChange={(e) => setFormData({ ...formData, status: e.target.value as ApplicationStatus })}
                       className="w-full px-2.5 py-1.5 text-xs bg-zinc-950 border border-zinc-800 rounded-lg text-zinc-200 focus:outline-none focus:ring-1 focus:ring-zinc-400"
                     >
-                      <option value="wishlist">Wishlist</option>
-                      <option value="applied">Applied</option>
-                      <option value="interviewing">Interviewing</option>
-                      <option value="offer">Offer</option>
-                      <option value="rejected">Rejected</option>
+                      {STATUS_CONFIG.map((opt) => (
+                        <option key={opt.status} value={opt.status}>
+                          {opt.label}
+                        </option>
+                      ))}
                     </select>
                   </div>
 
